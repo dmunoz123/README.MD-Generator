@@ -1,6 +1,6 @@
 # README.MD-Generator
 
-[Click to go to skip to video link](#video-link)
+[Click skip to video link](#video-link)
 
 ## Description
 
