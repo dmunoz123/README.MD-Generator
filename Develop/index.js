@@ -1,10 +1,9 @@
-// TODO: Include packages needed for this application
+// all packages/files used
 const inquirer = require("inquirer");
 const fs = require("fs");
-const markDown = require("./utils/generateMarkdown");
-const path = require("path");
+const markDown = require("./utils/generateMarkdown"); 
 
-// TODO: Create an array of questions for user input
+// array containing questions to prompt user with
 const questions = [
   { type: "input", name: "username", message: "What is your github username?" },
   {
@@ -49,11 +48,19 @@ const questions = [
       "Please list any and all collaborators. If you used third-party assets, please cite them here",
   },
   {
-    type: "checkbox",
+    type: "list",
     name: "license",
     message:
       "Do you want your project to include a license? Please choose an option.",
-    checkbox: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "No License"],
+    choices: [
+      "MIT",
+      "APACHE2.0",
+      "GPL3.0",
+      "BSD3",
+      "ECL2.0",
+      "GPL",
+      "No License",
+    ],
   },
   {
     type: "input",
@@ -61,21 +68,15 @@ const questions = [
     message:
       "If your project includes many different features, please list them here.",
   },
-  // {
-  //   type: "checkbox",
-  //   name: "questions",
-  //   message:
-  //     "Is it okay for any user to contact you regarding your repository?",
-  // },
 ];
 
 // use writefileSync, although bad practice, as it runs synchronously with main thread and can block main execution
 // usage of synchronous methods here is preferred as it is used to enable user input at runtime.
 function writeToFile(fileName, data) {
-  return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+  return fs.writeFileSync(fileName, data);
 }
 
-// TODO: Create a function to initialize app
+// upon initialization, prompt the user with questions, use data to create new file and print out success statement afterwards :) 
 function init() {
   inquirer.prompt(questions).then((userInput) => {
     writeToFile("README.md", markDown({ ...userInput }));
